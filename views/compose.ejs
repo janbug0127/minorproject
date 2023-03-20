@@ -10,9 +10,12 @@
         <label for="posttext">post</label>
         <textarea name="postBody" id="posttext" cols="30" rows="10" class="form-control"></textarea>
        </div>
+       <form action="/upload" method ="post">
+        <input type="file" id="myFile" name="filename">
 
-       <input type="file" id="myFile" name="filename">
-       <input type="submit">
+       </form>
+      
+       <!-- <input type="submit"> -->
     <button type="submit" class="btn btn-primary">publish</button>
     
 </form>
