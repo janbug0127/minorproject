@@ -1,6 +1,6 @@
 <%- include('partials/header'); -%>
 <h1>Compose</h1>
-<form action="/compose" method="post">
+<form class="form file-form">
     <div class="form-group">
         <label for="titleinput">Title</label>
         <input type="text" name="postTitle" id="titleinput" class="form-control">
@@ -10,10 +10,11 @@
         <label for="posttext">post</label>
         <textarea name="postBody" id="posttext" cols="30" rows="10" class="form-control"></textarea>
        </div>
-       <form action="/upload" method ="post">
-        <input type="file" id="myFile" name="filename">
-
-       </form>
+       <div class="form-row">
+        <label for="image" class="form-label">Image</label>
+        <input type="file" id="image" accept="application/pdf" >
+       </div>
+     
       
        <!-- <input type="submit"> -->
     <button type="submit" class="btn btn-primary">publish</button>

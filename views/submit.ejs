@@ -1,0 +1,363 @@
+<html>
+    <head>
+        <title> Submit Manuscript </title>
+
+        <!--font awesome-->
+        <script src="https://kit.fontawesome.com/12822bc29b.js" crossorigin="anonymous"></script>
+
+        <!-- bootstrap -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+                
+        <!-- css -->
+        <link rel="stylesheet" href="/css/submit.css">
+    </head>
+
+    <body>
+
+        <!-- NAVIGATION SECTION -->
+        <section id = "navigation">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand" href="/home"><b>ADTU</b></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav navItems">
+                    <li class="nav-item active">
+                      <a class="nav-link" href="#">Resources<span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Products</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">Browse</a>
+                    </li>
+                    <li class="nav-item ">
+                      <a class="nav-link " href="#">About</a>
+                    </li>
+                    <li class="nav-item ">
+                        <div class="dropdown">
+                            <i class="fa-solid fa-user profile-icon dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                            
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                              <a class="dropdown-item" href="/author"><%= username%></a>
+                              <a class="dropdown-item" href="/submit">Submit a manuscript</a>
+                              <a class="dropdown-item" href="/storedata">Status of manuscripts</a>
+                              <a class="dropdown-item" href="#">Already published papers</a>
+                            </div>
+                        </div>
+                    </li>
+                  </ul>
+                </div>
+              </nav>            
+
+        </section>
+
+        <hr>
+
+        <form class="form file-form">
+            <div class="form-group">
+                <label for="titleinput">Title</label>
+                <input type="text" name="postTitle" id="titleinput" class="form-control">
+                
+            </div>
+            <div class="form-group">
+                <label for="posttext">post</label>
+                <textarea name="postBody" id="posttext" cols="30" rows="10" class="form-control"></textarea>
+            </div>
+            <div class="form-row">
+                <label for="image" class="form-label">File</label>
+                <input type="file" id="image" accept="application/pdf" >
+               </div>
+               <!-- end of single row -->
+               
+                
+              
+               <!-- <input type="submit"> -->
+            <button type="submit" class="btn btn-primary">Submit</button>
+            
+        </form>
+
+        <!-- INFO SECTION -->
+        <!-- <section id = "info">
+            <em>Provide some information about the Manuscript</em>
+            <br><br>
+            <div class="form-section">
+                <strong> Article type selection</strong>
+                <br>
+                <label><em>Select the paper type</em></label>
+                <select class="form-select form-select-sm"  aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            
+            <div class="form-section">
+                <strong> Attach files</strong>
+                <br>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="customFile"  accept="application/pdf">
+                    <label class="custom-file-label" for="customFile">Browse...</label>
+                </div>    
+            </div>
+            
+            <div class="form-section">
+                <strong> General information</strong>
+                <br>
+                <label><em>Select area of interest/ specialization</em></label>
+                <select class="form-select form-select-sm"  aria-label="Default select example">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                </select>
+            </div>
+            
+            <div class="form-section">
+                <strong> Review preferences</strong>
+                <br>
+                <button class="btn btn-sm btn-dark" data-target="#mymodal" data-toggle="modal">Add Reviewer</button>
+                <div class="modal" id="mymodal">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h6>Reviewer details</h6>
+                                <button type="btn" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Degree</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Institution</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Department</label>
+                                        <input type="text" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="email" class="form-control">
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn btn-sm btn-dark" type="submit" data-dismiss="modal">Submit</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="form-section">
+                <strong> Additional Comments</strong>
+                <br>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Please enter any additional comments you would like to send to the publication office. These comments will not appear directly in your submission.</em></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <strong> Manuscript Data</strong>
+                <br>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Title</em></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Abstract</em></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Keywords</em></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+    
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Author(s)</em></label>
+                    <br>
+                    <button class="btn btn-sm btn-dark" data-target="#mymodal2" data-toggle="modal">Add Author</button>
+                    <div class="modal" id="mymodal2">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h6>Author details</h6>
+                                    <button type="btn" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Degree</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Institution</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Department</label>
+                                            <input type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>ISSN</label>
+                                            <input type="number" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            <input type="email" class="form-control">
+                                        </div>
+                                    </form>
+    
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-sm btn-dark" type="submit" data-dismiss="modal">Submit</button>
+                                </div>
+    
+                            </div>
+                        </div>
+    
+                    </div>                   
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="exampleFormControlTextarea1"><em>Funding Info</em></label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+            </div>
+            
+        </section>
+
+        SUBMIT SECTION -->
+        <!-- <section id = "submit">
+            <button class="btn btn-primary btn-lg btn-dark" type="submit">Submit Manuscript</button>
+        </section>
+         -->
+         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+         <script >
+            
+console.log('entered');
+const url = "/"
+
+const fileFormDOM = document.querySelector('.file-form')
+console.log(fileFormDOM);
+const nameInputDOM = document.querySelector('#titleinput')
+const priceInputDOM = document.querySelector('#posttext')
+const imageInputDOM = document.querySelector('#image')
+console.log(imageInputDOM);
+
+// const containerDOM = document.querySelector('.container')
+let imageValue;
+
+// imageInputDOM.addEventListener('change',(e)=>{
+//  const file = e.target.files[0];
+//  console.log(file);
+// })
+
+
+
+
+
+
+imageInputDOM.addEventListener('change',async (e)=>{
+ const imageFile = e.target.files[0];
+ const formData = new FormData();
+ formData.append('image',imageFile)
+    console.log("Hello inside");
+ try {
+  const {data:{image:{src}}} = await axios.post(`/upload`,formData,{
+   headers:{
+    'Content-Type':'multipart/form-data'
+   } 
+  })
+  imageValue = src
+  console.log(imageValue);
+ } catch (error) {
+   imageValue = null
+  console.log(error);
+ }
+})
+
+
+fileFormDOM.addEventListener('submit',async (e)=>{
+e.preventDefault()
+
+const nameValue = nameInputDOM.value;
+const priceValue = priceInputDOM.value;
+try {
+ 
+ const product = {title:nameValue,content:priceValue,image:imageValue}
+ console.log(product);
+  const data=await axios.post(`/createFile`,{title:nameValue,content:priceValue,image:imageValue},{
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+  },
+  });
+  console.log(data);
+  //fetchProducts()
+} catch (error) {
+ console.log(error);
+}
+})
+
+
+// async function fetchProducts () {
+//  try {
+//   const {data:{products}} = await axios.get(url);
+  
+//   const productsDOM = products.map((product)=>{
+// return `<article class="product">
+
+// <p>${product.image}</p>
+// <footer>
+// <p>${product.name}</p>
+// <span>$${product.price}</span>
+// </footer>
+// </article>`
+//   }).join('')
+//   containerDOM.innerHTML = productsDOM
+//  } catch (error) {
+//   console.log(error);
+//  }
+ 
+// }
+
+// fetchProducts()
+         </script>
+    </body>
+
+</html>

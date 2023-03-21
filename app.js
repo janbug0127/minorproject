@@ -6,7 +6,7 @@ const ejs = require("ejs");
 const _ = require('lodash');
 const mongoose  = require('mongoose');
 const bcrypt = require('bcrypt');
-// const jwt = require('jsonwebtoken');
+const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
 const User = require('./models/register');
 const auth = require('./middleware/auth');
@@ -15,85 +15,54 @@ const multer = require('multer');
 const Grid = require('gridfs-stream');
 const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
 const methodOverride = require('method-override');
+const path = require('path');
+
+var cors = require('cors');
+const console = require('console');
+mongoose.set("strictQuery", false);
+  mongoose.connect("mongodb://localhost:27017/blogdb");
 
  
- const conn = mongoose.createConnection("mongodb://localhost:27017/blogdb");
-
- // Init gfs
 
 const homeStartingContent = "Write your thoughts regarding recents development and trends in IT sector and let the community grow";
 const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
 const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
-
+var username = "tanisha";
 const app = express();
-
+app.use(cors());
+app.use(fileUpload({ useTempFiles: true }));
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
-
+app.use(bodyParser.json());
+// const blogSchema = {
+//   title : String,
+//   content:String,
+//   image: {
+//     type: String,
+//     required: true,
+//   },
+// };
 const blogSchema = {
   title : String,
-  content:String
+  content:String,
+  image: String
+     };
+const Post = mongoose.model("Post", blogSchema);
 
-    
- };
-
- 
- const Post = mongoose.model("Post", blogSchema);
-
-
- let gfs;
-
-conn.once('open', () => {
-  // Init stream
-  gfs = Grid(conn.db, mongoose.mongo);  
-  gfs.collection('uploads');
-});
-
-
-// Create storage engine
-const storage = new GridFsStorage({
-  url: 'mongodb://localhost:27017/blogdb',
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16,(err,buff)=>{
-        if(err){
-          return reject(err);
-        }
-        const filename = buff.toString('hex') + path.extname(file.originalname);
- 
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-        // const filename = file.originalname;
-       
-    });
-  }
-});
-
-const upload = multer({ storage});
-
-app.post('/upload', upload.single('file'), (req, res) => {
-   res.json({file:req.file});
-  // res.redirect('/compose');
-});
-
- app.get("/home",auth,  function(req, res){
-  console.log(req.user.name);
+app.get("/home",auth,  function(req, res){
+  username = req.user.name ;
   Post.find({}, function(err, posts){
 
    res.render("home", {
   
     startingContent: homeStartingContent,
   
-    posts: posts
-                   
+    posts: posts,
+   username : req.user.name            
     
       });
   
@@ -102,6 +71,33 @@ app.post('/upload', upload.single('file'), (req, res) => {
  })
 app.get("/", function(req,res){
   res.render("login",); 
+})
+app.post('/createFile',async function(req,res){
+  console.log('file created', req.body);
+
+  const product = await Post.create(req.body);
+  // res.json({ product });
+  res.render("home");
+})
+app.post("/upload",async function(req,res){
+  console.log("Please",req.files);
+  if (!req.files) {
+    res.send("hi upload file")
+  }
+  const productImage = req.files.image;
+  
+  console.log('product image' , productImage);
+  
+  const imagePath = path.join(
+    __dirname,
+    '/public/uploads/' + `${productImage.name}`
+  );
+  console.log(imagePath);
+  // await productImage.mv(imagePath);
+  // console.log('crooseed');
+
+  return res
+    .json({ image: { src: `/uploads/${productImage.name}` } });
 })
 app.post("/login", async function(req,res){
   console.log(req.body); 
@@ -113,7 +109,7 @@ app.post("/login", async function(req,res){
  
 const token = await data.generateAuthToken();
 res.cookie("jwt",token,{
-  expires:new Date(Date.now()+30000),
+  expires:new Date(Date.now()+3000000),
   httpOnly:true
   
 }
@@ -125,7 +121,7 @@ if (!err){
   res.render("login");
 }});
   
- // res.render("login",);
+ 
  });
 
 
@@ -133,13 +129,13 @@ app.post("/home",  async function(req,res){
    try{
    const  email = req.body.email;
     const password = req.body.password;
-    // console.log(password);
+    
       const useremail = await User.findOne({email : email});
       var flag = bcrypt.compare(password, useremail.password);
       const token = await useremail.generateAuthToken();
 
       res.cookie("jwt",token,{
-        expires:new Date(Date.now()+30000),
+        expires:new Date(Date.now()+3000000),
         httpOnly:true,
         secure:true
         
@@ -148,7 +144,7 @@ app.post("/home",  async function(req,res){
       
       )
       console.log(req.cookies.jwt)
-      // console.log(flag);
+      
       if(flag){
         console.log("found");
         res.status(201).redirect("/home");
@@ -170,11 +166,34 @@ app.get("/about", function(req, res){
 app.get("/contact",function(req,res){
    res.render("contact",{contactcont : contactContent});
 })
+app.get("/submit", auth, function(req,res){
+  res.render("submit",{
+    username : req.user.name
+  });
+})
+app.get("/author", auth, function(req,res){
+  res.render("author",{
+    username : req.user.name
+  });
+})
+app.get("/storedata", auth, function(req,res){
+  Post.find({}, function(err, posts){
 
+    res.render("storedata", {
+   
+    
+   
+     posts: posts,
+    username : req.user.name            
+     
+       });
+   
+    })
+})
 app.get("/compose",function(req,res){
   res.render("compose",);
 })
-app.post("/compose",function(req, res){
+app.post("/submit",function(req, res){
   console.log(req.body);
   const post = Post( {
      title : req.body.postTitle,
