@@ -15,6 +15,10 @@ const userdetailSchema = new mongoose.Schema( {
       required : true
 
     },
+    role :{
+      type:String,
+      required : true
+    },
     tokens:[{
       token:{
         type: String,

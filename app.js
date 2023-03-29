@@ -72,6 +72,9 @@ app.get("/home",auth,  function(req, res){
 app.get("/", function(req,res){
   res.render("login",); 
 })
+app.get("/login", function(req,res){
+  res.render("login",); 
+})
 app.post('/createFile',async function(req,res){
   console.log('file created', req.body);
 
@@ -104,12 +107,13 @@ app.post("/login", async function(req,res){
   const data = User( {
     name : req.body.name,
     email : req.body.email,
-    password : req.body.password
+    password : req.body.password,
+    role : req.body.role
   });
  
 const token = await data.generateAuthToken();
 res.cookie("jwt",token,{
-  expires:new Date(Date.now()+3000000),
+  expires:new Date(Date.now()+600000),
   httpOnly:true
   
 }
@@ -135,7 +139,7 @@ app.post("/home",  async function(req,res){
       const token = await useremail.generateAuthToken();
 
       res.cookie("jwt",token,{
-        expires:new Date(Date.now()+3000000),
+        expires:new Date(Date.now()+600000),
         httpOnly:true,
         secure:true
         
@@ -197,12 +201,13 @@ app.post("/submit",function(req, res){
   console.log(req.body);
   const post = Post( {
      title : req.body.postTitle,
-     content : req.body.postBody
+     content : req.body.postBody,
+     image : req.body.journal
    });
   
    post.save(function(err){
    if (!err){
- res.redirect("/home");
+ res.redirect("/storedata");
  }
   });
    console.log(post);

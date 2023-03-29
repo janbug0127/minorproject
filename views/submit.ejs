@@ -43,10 +43,11 @@
                             <i class="fa-solid fa-user profile-icon dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                             
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item" href="/author"><%= username%></a>
-                              <a class="dropdown-item" href="/submit">Submit a manuscript</a>
-                              <a class="dropdown-item" href="/storedata">Status of manuscripts</a>
-                              <a class="dropdown-item" href="#">Already published papers</a>
+                                <a class="dropdown-item" href="/author"><%= username%></a>
+                                <a class="dropdown-item" href="/submit">Submit a manuscript</a>
+                                <a class="dropdown-item" href="/storedata">Status of manuscripts</a>
+                                <a class="dropdown-item" href="#">Already published papers</a>
+                                <a class="dropdown-item" href="/Login">Logout</a>
                             </div>
                         </div>
                     </li>
@@ -58,7 +59,7 @@
 
         <hr>
 
-        <form class="form file-form">
+        <form class="form file-form" method="post" action="/submit">
             <div class="form-group">
                 <label for="titleinput">Title</label>
                 <input type="text" name="postTitle" id="titleinput" class="form-control">
@@ -69,8 +70,8 @@
                 <textarea name="postBody" id="posttext" cols="30" rows="10" class="form-control"></textarea>
             </div>
             <div class="form-row">
-                <label for="image" class="form-label">File</label>
-                <input type="file" id="image" accept="application/pdf" >
+                <label for="file" class="form-label">File</label>
+                <input type="file" name="journal" id="image" accept="application/pdf"  >
                </div>
                <!-- end of single row -->
                
@@ -80,6 +81,80 @@
             <button type="submit" class="btn btn-primary">Submit</button>
             
         </form>
+
+        <script>
+            const imageInputDOM = document.querySelector('#image');
+             imageInputDOM.addEventListener('change',async (e)=>{
+//  const imageFile = e.target.files[0];
+//  const formData = new FormData();
+//  formData.append('image',imageFile)
+//     console.log("Hello inside");
+//  try {
+//   const {data:{image:{src}}} = await axios.post(`/upload`,formData,{
+//    headers:{
+//     'Content-Type':'multipart/form-data'
+//    } 
+//   })
+//   imageValue = src
+//   console.log(imageValue);
+//  } catch (error) {
+//    imageValue = null
+//   console.log(error);
+//  }
+         console.log('hiii');
+                var selectedFile = document.getElementById('image').files;
+                // var selectedFile = document.getElementById("inputFile").files;
+                //Check File is not Empty
+                if (selectedFile.length > 0) {
+                    // Select the very first file from list
+                    var fileToLoad = selectedFile[0];
+                    // FileReader function for read the file.
+                    var reader = new FileReader()
+                    // var base64;
+                    // Onload of file read the file content
+                    console.log('hiii');
+                    reader.onload =()=> {
+                        console.log('hiii');
+                   console.log(reader.result);
+            // Logs data:<type>;base64,wL2dvYWwgbW9yZ...
+        };
+        console.log('hiii');
+                    // fileReader.onload = function(fileLoadedEvent) {
+                    //     base64 = fileLoadedEvent.target.result;
+                    //     // Print data in console
+                    //     console.log('hiii');
+                    //     console.log(base64);
+                    // };
+                    // Convert data to base64
+                    // reader.readAsDataURL(fileToLoad);
+                }
+
+})
+
+
+
+            // function convertToBase64() {
+            //     //Read File
+            //     console.log('hiii');
+            //     var selectedFile = document.getElementById("inputFile").files;
+            //     //Check File is not Empty
+            //     if (selectedFile.length > 0) {
+            //         // Select the very first file from list
+            //         var fileToLoad = selectedFile[0];
+            //         // FileReader function for read the file.
+            //         var fileReader = new FileReader();
+            //         var base64;
+            //         // Onload of file read the file content
+            //         fileReader.onload = function(fileLoadedEvent) {
+            //             base64 = fileLoadedEvent.target.result;
+            //             // Print data in console
+            //             console.log(base64);
+            //         };
+            //         // Convert data to base64
+            //         fileReader.readAsDataURL(fileToLoad);
+            //     }
+            // }
+        </script>
 
         <!-- INFO SECTION -->
         <!-- <section id = "info">
@@ -266,7 +341,7 @@
             <button class="btn btn-primary btn-lg btn-dark" type="submit">Submit Manuscript</button>
         </section>
          -->
-         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+         <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
          <script >
             
@@ -278,22 +353,22 @@ console.log(fileFormDOM);
 const nameInputDOM = document.querySelector('#titleinput')
 const priceInputDOM = document.querySelector('#posttext')
 const imageInputDOM = document.querySelector('#image')
-console.log(imageInputDOM);
+console.log(imageInputDOM); -->
 
-// const containerDOM = document.querySelector('.container')
-let imageValue;
+<!-- // const containerDOM = document.querySelector('.container')
+// let imageValue;
 
 // imageInputDOM.addEventListener('change',(e)=>{
 //  const file = e.target.files[0];
 //  console.log(file);
-// })
+// }) -->
 
 
 
 
 
 
-imageInputDOM.addEventListener('change',async (e)=>{
+<!-- imageInputDOM.addEventListener('change',async (e)=>{
  const imageFile = e.target.files[0];
  const formData = new FormData();
  formData.append('image',imageFile)
@@ -306,14 +381,15 @@ imageInputDOM.addEventListener('change',async (e)=>{
   })
   imageValue = src
   console.log(imageValue);
+  alert('Manuscript Submitted');
  } catch (error) {
    imageValue = null
   console.log(error);
  }
-})
+}) -->
 
 
-fileFormDOM.addEventListener('submit',async (e)=>{
+<!-- fileFormDOM.addEventListener('submit',async (e)=>{
 e.preventDefault()
 
 const nameValue = nameInputDOM.value;
@@ -329,6 +405,7 @@ try {
   });
   console.log(data);
   //fetchProducts()
+  
 } catch (error) {
  console.log(error);
 }
@@ -357,7 +434,9 @@ try {
 // }
 
 // fetchProducts()
-         </script>
+         </script> -->
+
+         
     </body>
 
 </html>

@@ -276,6 +276,7 @@
 				<input type="text"  name = "name" placeholder="Name" />
 				<input type="email" name ="email" placeholder="Email" />
 				<input type="password" name = "password" placeholder="Password" />
+				<input type="text" name = "role" placeholder="Role" />
 				<button>Sign Up</button>
 			</form>
 		</div>
@@ -291,7 +292,13 @@
 				<input type="email"  name = "email" placeholder="Email" />
 				<input type="password" name="password" placeholder="Password" />
 				<!-- <a href="#">Forgot your password?</a> -->
-				<button>Sign In</button>
+				<button>Author Login</button>
+				<br>
+				<button>Editor Login</button>
+				<br>
+				<button>Reviewer Login</button>
+				<br>
+				<button>Reader Login</button>
 			</form>
 
 			
@@ -299,19 +306,20 @@
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel overlay-left">
-					<h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal info</p>
+					<!-- <h1>Welcome Back!</h1>
+					<p>To keep connected with us please login with your personal info</p> -->
 					<button class="ghost" id="signIn">Sign In</button>
+					
 				</div>
 				<div class="overlay-panel overlay-right">
-					<h1>Hello, Friend!</h1>
-					<p>Enter your personal details and start journey with us</p>
+					<!-- <h1>Hello, Friend!</h1>
+					<p>Enter your personal details and start journey with us</p> -->
 					<button class="ghost" id="signUp">Sign Up</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<script src="/browserApp.js">
+	<!-- <script src="/browserApp.js">
 
 
 	</script>
@@ -329,7 +337,30 @@
 			container.classList.remove("right-panel-active");
 		});</script>
 =
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+
+<!-- <script type="text/javascript">
+    function convertToBase64() {
+        //Read File
+        var selectedFile = document.getElementById("inputFile").files;
+        //Check File is not Empty
+        if (selectedFile.length > 0) {
+            // Select the very first file from list
+            var fileToLoad = selectedFile[0];
+            // FileReader function for read the file.
+            var fileReader = new FileReader();
+            var base64;
+            // Onload of file read the file content
+            fileReader.onload = function(fileLoadedEvent) {
+                base64 = fileLoadedEvent.target.result;
+                // Print data in console
+                console.log(base64);
+            };
+            // Convert data to base64
+            fileReader.readAsDataURL(fileToLoad);
+        }
+    }
+</script> -->
 
 
 </body>
