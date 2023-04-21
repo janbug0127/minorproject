@@ -1,9 +1,8 @@
-//jshint esversion:6
 require('dotenv').config()
 const express = require("express");
 const bodyParser = require("body-parser");
-const ejs = require("ejs");
-const _ = require('lodash');
+const ejs  = require("ejs");
+const _  = require('lodash');
 const mongoose  = require('mongoose');
 const bcrypt = require('bcrypt');
 const fileUpload = require('express-fileupload');
@@ -11,9 +10,16 @@ const cookieParser = require('cookie-parser');
 const User = require('./models/register');
 const auth = require('./middleware/auth');
 const crypto  = require('crypto');
+const cloudinary = require('cloudinary').v2;
+const Formidable = require('formidable');
 const multer = require('multer');
-const Grid = require('gridfs-stream');
-const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
+const fs = require('fs');
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET
+});
+
 const methodOverride = require('method-override');
 const path = require('path');
 
@@ -22,15 +28,10 @@ const console = require('console');
 mongoose.set("strictQuery", false);
   mongoose.connect("mongodb://localhost:27017/blogdb");
 
- 
-
-const homeStartingContent = "Write your thoughts regarding recents development and trends in IT sector and let the community grow";
-const aboutContent = "Hac habitasse platea dictumst vestibulum rhoncus est pellentesque. Dictumst vestibulum rhoncus est pellentesque elit ullamcorper. Non diam phasellus vestibulum lorem sed. Platea dictumst quisque sagittis purus sit. Egestas sed sed risus pretium quam vulputate dignissim suspendisse. Mauris in aliquam sem fringilla. Semper risus in hendrerit gravida rutrum quisque non tellus orci. Amet massa vitae tortor condimentum lacinia quis vel eros. Enim ut tellus elementum sagittis vitae. Mauris ultrices eros in cursus turpis massa tincidunt dui.";
-const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rhoncus urna neque viverra justo nec ultrices. Arcu dui vivamus arcu felis bibendum. Consectetur adipiscing elit duis tristique. Risus viverra adipiscing at in tellus integer feugiat. Sapien nec sagittis aliquam malesuada bibendum arcu vitae. Consequat interdum varius sit amet mattis. Iaculis nunc sed augue lacus. Interdum posuere lorem ipsum dolor sit amet consectetur adipiscing elit. Pulvinar elementum integer enim neque. Ultrices gravida dictum fusce ut placerat orci nulla. Mauris in aliquam sem fringilla ut morbi tincidunt. Tortor posuere ac ut consequat semper viverra nam libero.";
 var username = "tanisha";
 const app = express();
 app.use(cors());
-app.use(fileUpload({ useTempFiles: true }));
+
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -38,28 +39,93 @@ app.use(express.static("public"));
 app.use(cookieParser());
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
-// const blogSchema = {
-//   title : String,
-//   content:String,
-//   image: {
-//     type: String,
-//     required: true,
-//   },
-// };
+
+
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function(req, file, cb){
+    cb(null,file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
+});
+const upload = multer({ storage: storage }).single('textfile');
+
 const blogSchema = {
   title : String,
   content:String,
-  image: String
+  image: String,
+  userid : String,
+  status : String,
+  keyword : String,
+  author: String,
+  likescount: Number
      };
 const Post = mongoose.model("Post", blogSchema);
+
+async function uploadToCloudinary(locaFilePath) {
+  const result =  await cloudinary.uploader.upload(locaFilePath,
+    {
+      use_filename: true,
+      folder: 'file-upload',
+    }
+    );
+  fs.unlinkSync(locaFilePath);
+  return result;
+}
+app.post('/submit',auth, async  (req, res) => {
+        upload(req, res, async (err) => {
+      // console.log(req.file);
+      if(err){
+        console.log('error got');
+        res.send(err);
+      } else {
+       var locaFilePath = req.file.path
+    console.log('pathgot ' + locaFilePath); 
+var result = await uploadToCloudinary(locaFilePath)
+
+     console.log(result);
+   console.log('url got  ' + result.url);
+    const newsubmit = "newly_submit";
+  const post = Post({
+    title : req.body.postTitle,
+     content : req.body.postBody,
+     image : result.url,
+     userid : req.user._id,
+     status : newsubmit,
+     author: req.body.authors,
+     keyword : req.body.keywords
+     
+   });
+  
+   post.save(function(err){
+   if (!err){
+ res.redirect("/storedata");
+ }
+  });
+   console.log(post);
+   console.log('post shown');
+       }
+   });
+  });
+
+   
+app.get("/posts/:postId", function(req,res){
+  const requestedPostId = req.params.postId;
+   Post.findOne({_id: requestedPostId}, function(err, post){ 
+    res.render("post", {
+
+      title: post.title,
+ 
+      content: post.content
+ 
+    });
+   });
+});
 
 app.get("/home",auth,  function(req, res){
   username = req.user.name ;
   Post.find({}, function(err, posts){
 
    res.render("home", {
-  
-    startingContent: homeStartingContent,
   
     posts: posts,
    username : req.user.name            
@@ -82,28 +148,10 @@ app.post('/createFile',async function(req,res){
   // res.json({ product });
   res.render("home");
 })
-app.post("/upload",async function(req,res){
-  console.log("Please",req.files);
-  if (!req.files) {
-    res.send("hi upload file")
-  }
-  const productImage = req.files.image;
-  
-  console.log('product image' , productImage);
-  
-  const imagePath = path.join(
-    __dirname,
-    '/public/uploads/' + `${productImage.name}`
-  );
-  console.log(imagePath);
-  // await productImage.mv(imagePath);
-  // console.log('crooseed');
 
-  return res
-    .json({ image: { src: `/uploads/${productImage.name}` } });
-})
 app.post("/login", async function(req,res){
   console.log(req.body); 
+  console.log(req.body.role);
   const data = User( {
     name : req.body.name,
     email : req.body.email,
@@ -115,25 +163,24 @@ const token = await data.generateAuthToken();
 res.cookie("jwt",token,{
   expires:new Date(Date.now()+600000),
   httpOnly:true
-  
-}
-
+  }
 )
  
 data.save(function(err){
 if (!err){
+  
   res.render("login");
 }});
   
  
  });
 
-
 app.post("/home",  async function(req,res){
    try{
    const  email = req.body.email;
     const password = req.body.password;
-    
+      const role = req.body.role;
+ 
       const useremail = await User.findOne({email : email});
       var flag = bcrypt.compare(password, useremail.password);
       const token = await useremail.generateAuthToken();
@@ -144,14 +191,44 @@ app.post("/home",  async function(req,res){
         secure:true
         
       }
-
-      
-      )
+       )
       console.log(req.cookies.jwt)
-      
+        console.log(`role entered  ${role}`);
+        console.log(`original role  ${useremail.role}`);
       if(flag){
+
         console.log("found");
-        res.status(201).redirect("/home");
+        if(useremail.role === role){
+            if(role === "author"){
+              // res.render("author",{
+              //   username : useremail.name,
+                
+              // });
+              res.redirect("author");
+            }
+            else if(role === "editor"){
+              // res.render("editor",{
+              //   posts : posts,
+              //   username : useremail.name
+                
+              // });;
+              res.redirect("editor");
+            }
+            else if(role === "reviewer"){
+              res.render("reviewer",{
+                username : useremail.name
+              });
+            }
+            else{
+              res.render("reader",{
+                username : useremail.name
+              });
+            }
+        }
+        else{
+          res.send("you are not a + ${role}")
+        }
+        
       }
      else{
       res.send("invalid login Details");
@@ -175,6 +252,28 @@ app.get("/submit", auth, function(req,res){
     username : req.user.name
   });
 })
+app.get("/editor", auth, function(req,res){
+  Post.find({}, function(err, posts){
+    // User.find({}, function(error, users){
+
+    
+    res.render("editor", {
+     
+    //  authorid : req.user._id,
+     posts: posts,
+    username : req.user.name,
+    User: User          
+      
+      //  });
+      }) ;
+   
+    })
+})
+app.get("/reviewer", auth, function(req,res){
+  res.render("reviewer",{
+    username : req.user.name
+  });
+})
 app.get("/author", auth, function(req,res){
   res.render("author",{
     username : req.user.name
@@ -182,11 +281,10 @@ app.get("/author", auth, function(req,res){
 })
 app.get("/storedata", auth, function(req,res){
   Post.find({}, function(err, posts){
-
+      
     res.render("storedata", {
-   
-    
-   
+
+     authorid : req.user._id,
      posts: posts,
     username : req.user.name            
      
@@ -197,33 +295,37 @@ app.get("/storedata", auth, function(req,res){
 app.get("/compose",function(req,res){
   res.render("compose",);
 })
-app.post("/submit",function(req, res){
-  console.log(req.body);
-  const post = Post( {
-     title : req.body.postTitle,
-     content : req.body.postBody,
-     image : req.body.journal
-   });
-  
-   post.save(function(err){
-   if (!err){
- res.redirect("/storedata");
- }
-  });
-   console.log(post);
-   });
-app.get("/posts/:postId", function(req,res){
-  const requestedPostId = req.params.postId;
-   Post.findOne({_id: requestedPostId}, function(err, post){ 
-    res.render("post", {
 
-      title: post.title,
- 
-      content: post.content
- 
-    });
-   });
+app.get("/register",function(req,res){
+  res.render("register",);
+})
+
+app.get("/login",function(req,res){
+  res.render("login",);
+})
+
+app.get("/editorpage", auth,function(req,res){
+  username = req.user.name ;
+  Post.find({}, function(err, posts){
+
+   res.render("editor", {
+  
+    posts: posts,
+   username : req.user.name            
+    
+      });
+  
+   })
+
+
+} )
+
+app.post("/statuschange", async function(req,res){
+  console.log(`status change  ${req.body}`); 
+  console.log(req);
+  // console.log(req.body.role);
 });
+
 
 
 app.listen(3000, function(){

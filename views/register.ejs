@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Registration</title>
+  <script src="reg.js"></script>
+  <link rel="stylesheet" href="/css/login.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <form action="/login" method="post">
+    <h3>Register</h3>
+    <fieldset>
+      <legend>Login Details</legend>
+      <label class="label1" for="email">Email:</label>
+      <input class="input1" type="email" id="email" name="email"><br><br>
+      <label class="label1" for="password">Password:</label>
+      <input class="input1" type="password" id="password" name="password"><br><br>
+    </fieldset>
+    <fieldset>
+      <legend>Personal Information</legend>
+      <label class="label1" for="role">Role:</label>
+      
+      <!-- <input class="input1" type="text" id="role" name="role"><br><br> -->
+      
+      <select name="role" id="roles">
+        <option value="author">author</option>
+        <option value="editor">editor</option>
+        <option value="reviewer">reviewer</option>
+        <option value="reader">reader</option>
+      </select>
+
+      <label class="label1" for="name"> name:</label>
+      <input class="input1" type="text" id="name" name="name"><br><br>
+     
+      <label class="label1" for="degree">Degree:</label>
+      <input class="input1" type="text" id="email" name="degree"><br><br>
+      <label class="label1" for="phone">Phone no:</label>
+      <input class="input1" type="text" id="birthday" name="phone"><br><br>
+      
+    </fieldset>
+    <br><br>
+    <fieldset>
+      <legend>Institute Related Information</legend>
+      <label class="label1" for="Institute">Institution:</label>
+      <input class="input1" type="text" id="fname" name="Institute"><br><br>
+      <label class="label1" for="department">Department:</label>
+      <input class="input1" type="text" id="lname" name="department"><br><br>
+      <label class="label1" for="Address">Street Address:</label>
+      <input class="input1" type="text" id="email" name="Address"><br><br>
+      <label class="label1" for="city">City:</label>
+      <input class="input1" type="text" id="birthday" name="city"><br><br>
+      <label class="label1" for="state">State or Province:</label>
+      <input class="input1" type="text" id="state" name="state"><br><br>
+      <label class="label1" for="ZipCode">Zip or Postal Code:</label>
+      <input class="input1" type="text" id="birthday" name="ZipCode"><br><br>
+      <label class="label1" for="country">Country or Region:</label>
+      <input class="input1" type="text" id="country" name="country"><br><br>
+      <label for="birthday">Available as a Reviewer:</label>
+
+      
+      <label for="YES">YES</label>
+      <input type="radio" id="YES" name="fav_language" value="YES"> <br>
+      <label for="NO">NO</label>
+      <input type="radio" id="NO" name="fav_language" value="NO">
+
+    </fieldset><br><br>
+
+    <fieldset>
+      <legend>Expertise</legend>
+    
+      Occupation: <br><select name="subject" id="subject">
+        <option value="" selected="selected">Select occupation</option>
+      </select>
+      <br><br>
+      Business: <br><select name="topic" id="topic">
+        <option value="" selected="selected">Please select occupation first</option>
+      </select>
+      <br><br>
+      Interest: <br><select name="chapter" id="chapter">
+        <option value="" selected="selected">Please select business first</option>
+      </select>
+      <br><br>
+    </fieldset>
+    <p>Already have an account? </p>
+    <a href="/login"><button type="button">Login</button></a>
+     <br>
+     <br>
+     <br>
+     <button type ="submit">Submit</button>
+  </form>
+</body>
+
+</html>

@@ -59,35 +59,44 @@
 
         </section>
 
-        <hr>
+        <hr> 
 
         <section id = "body">
-        
-        <div>
+          <h1>New Submissions</h1>
+        <div class="cards">
           
-               <% posts.forEach(function(post){ %>
-                <div>
+               <% posts.forEach(function(post){ 
+                if(post.userid == authorid && post.status === "newly_submit"){
+                %>
+              <diV class="card">
+                  <img class="card-img" src="/css/css_images/OIP (1).jfif" alt="Card image cap">
+                                     
+              
+
+                <div class="card-body">
                   <h2> <%= post.title %></h2>
                 </div>
-                <div>
+                <div class="card-body">
                  <p><%= post.content %> </p>  
 
                 </div>
-                <div>
+                <div class="card-body">
                     <h4>journal file link</h4>
-                    <h5><%= post.image %></h5>
+                   <a href="<%= post.image %>" target="_blank">journal<h5></h5></a> 
                 </div>
-                <hr>
-                <br><br>
-              <% }); %>  
-            </div>
+
+              </diV> 
+                 <!-- <hr>
+                <br><br> -->
+              <% }}); %>  
+        </div>
 
         </section>
 
        
 
         <!-- FOOTER -->
-        <!-- <section id = "footer">
+        <section id = "footer">
                 
                 <div class="container">
                     <div class="row">
@@ -128,7 +137,7 @@
                 <a class="text-dark" href="#">ADTUjournals.com</a>
             </div>
 
-        </section> -->
+        </section>
 
     <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 

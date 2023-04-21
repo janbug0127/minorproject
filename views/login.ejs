@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -259,21 +259,21 @@
 		footer a {
 			color: #3c97bf;
 			text-decoration: none;
-		}</style>
-</head>
-<body>
+		}</style> -->
+<!-- </head>
+<body> -->
 	<!-- <h2>Weekly Coding Challenge #1: Sign in/up Form</h2> -->
-	<div class="container" id="container">
+	<!-- <div class="container" id="container">
 		<div class="form-container sign-up-container">
 			<form action="/login" method="post">
-				<h1>Create Account</h1>
+				<h1>Create Account</h1> -->
 	<!-- 			<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
 				<span>or use your email for registration</span> -->
-				<input type="text"  name = "name" placeholder="Name" />
+				<!-- <input type="text"  name = "name" placeholder="Name" />
 				<input type="email" name ="email" placeholder="Email" />
 				<input type="password" name = "password" placeholder="Password" />
 				<input type="text" name = "role" placeholder="Role" />
@@ -282,17 +282,17 @@
 		</div>
 		<div class="form-container sign-in-container">
 			<form action="/home" method="post">
-				<h1>Sign in</h1>
+				<h1>Sign in</h1> -->
 	<!-- 			<div class="social-container">
 					<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
 					<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
 					<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
 				</div>
 				<span>or use your account</span> -->
-				<input type="email"  name = "email" placeholder="Email" />
-				<input type="password" name="password" placeholder="Password" />
+				<!-- <input type="email"  name = "email" placeholder="Email" />
+				<input type="password" name="password" placeholder="Password" /> -->
 				<!-- <a href="#">Forgot your password?</a> -->
-				<button>Author Login</button>
+				<!-- <button>Author Login</button>
 				<br>
 				<button>Editor Login</button>
 				<br>
@@ -305,25 +305,25 @@
 		</div>
 		<div class="overlay-container">
 			<div class="overlay">
-				<div class="overlay-panel overlay-left">
-					<!-- <h1>Welcome Back!</h1>
-					<p>To keep connected with us please login with your personal info</p> -->
-					<button class="ghost" id="signIn">Sign In</button>
+				<div class="overlay-panel overlay-left"> -->
+					 <!-- <h1>Welcome Back!</h1>  -->
+					<!-- <p>To keep connected with us please login with your personal info</p>  -->
+					<!-- <button class="ghost" id="signIn">Sign In</button>
 					
 				</div>
-				<div class="overlay-panel overlay-right">
-					<!-- <h1>Hello, Friend!</h1>
-					<p>Enter your personal details and start journey with us</p> -->
-					<button class="ghost" id="signUp">Sign Up</button>
+				<div class="overlay-panel overlay-right">  -->
+					 <!-- <h1>Hello, Friend!</h1>  -->
+					<!-- <p>Enter your personal details and start journey with us</p>  -->
+					<!-- <button class="ghost" id="signUp">Sign Up</button>
 				</div>
 			</div>
-		</div>
-	</div>
-	<!-- <script src="/browserApp.js">
+		</div> 
+	 </div>  -->
+	 <!-- <script src="/browserApp.js"> -->
 
 
-	</script>
-	<script>
+	
+	 <!-- <script>
 		console.log('ttt');
 	    const signUpButton = document.getElementById('signUp');
 		const signInButton = document.getElementById('signIn');
@@ -335,9 +335,9 @@
 		
 		signInButton.addEventListener('click', () => {
 			container.classList.remove("right-panel-active");
-		});</script>
+		});</script> 
 =
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script> -->
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>   -->
 
 <!-- <script type="text/javascript">
     function convertToBase64() {
@@ -363,6 +363,49 @@
 </script> -->
 
 
+<!-- </body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <form action="/home" method="post">
+        <h3>Login Here</h3> 
+
+        <label for="username">Email</label>
+        <input type="text" placeholder="Email or Phone" id="username" name="email">
+
+        <label for="password">Password</label>
+        <input type="password" placeholder="Password" id="password" name="password">
+        <!-- <div class="social">
+          <div class="log"><a href="/author">Author Login</a></div>
+          <div class="log"><a href="/editor"> Editor Login</a></div>
+        </div>
+        <div class="social">
+            <div class="log"><a href="/reviewer">Reviewer Login</a></div>
+            <div class="log"><a href="/index">Reader Login</a></div>
+        </div> -->
+
+		<select name="role" id="roles">
+			<option value="author">as author</option>
+			<option value="editor">as editor</option>
+			<option value="reviewer">as reviewer</option>
+			<option value="reader">as reader</option>
+		  </select>
+        <p>Don't have an account? </p>
+        <a href="/register"><button type="button">Register</button></a>
+		<br>
+		<br>
+		<br>
+     <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
 
