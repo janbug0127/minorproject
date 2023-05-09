@@ -133,8 +133,8 @@
                                         <option value="3">Three</option>
                                     </select>
                                     <!-- <p name="postid">post._id</p> -->
-                                    <!-- <input type="submit" value="Submit" onclick="submitform(post._id)"> -->
-                                    <button  type="submit"  onclick="submitform()" >Submit</button>
+                                    
+                                    <button  type="submit"  onclick="submitform(post._id)" >Submit</button>
                                   </form>
                             </div>
                             <!-- <div class="modal-footer">
@@ -253,14 +253,14 @@
 </section>
 
 <script>
-  function submitform(){
+  function submitform(postid){
        const formData = new FormData(this);
         const searchParams = new URLSearchParams();
         console.log('event listened');
         for(const pair of formData){
             searchParams.append(pair[0], pair[1]);
         }
-        // searchParams.append(id ,postid);
+         searchParams.append(id ,postid);
              
         
          
