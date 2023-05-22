@@ -15,270 +15,269 @@
         <link rel="stylesheet" href="/css/editor.css">
             
 
-    <body>
 
-        <!-- NAVIGATION SECTION -->
-        <section id = "navigation">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="index.html"><b>ADTU</b></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                  <ul class="navbar-nav navItems">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">Resources<span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Products</a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Browse</a>
-                    </li>
-                    <li class="nav-item ">
-                      <a class="nav-link " href="#footer">About</a>
-                    </li>
-                    <li class="nav-item ">
-                        <div class="dropdown">
-                            <i class="fa-solid fa-user profile-icon dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-                            
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                              <a class="dropdown-item " href="#"><%=username%></a>
-                              <a class="dropdown-item " href="#newsubmission">New Submissions</a>
-                              <a class="dropdown-item" href="#underReview">Under Review</a>
-                              <a class="dropdown-item" href="#reviewCompleted">Review Completed</a>
-                              <a class="dropdown-item" href="#rejected">Rejected Papers</a>
-                              <a class="dropdown-item" href="#published">Published Papers</a>
-                              <a class="dropdown-item" href="#">Log Out</a>
-                            </div>
+  <body>
+
+    <!-- NAVIGATION SECTION -->
+    <section id = "navigation">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="home"><b>ADTU</b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav navItems">
+                <li class="nav-item active">
+                  <a class="nav-link" href="#">Resources<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Products</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Browse</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link " href="#footer">About</a>
+                </li>
+                <li class="nav-item ">
+                    <div class="dropdown">
+                        <i class="fa-solid fa-user profile-icon dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item " href="#"><%=username%></a>
+                            <a class="dropdown-item " href="#newsubmission">New Submissions</a>
+                            <a class="dropdown-item" href="#underReview">Under Review</a>
+                            <a class="dropdown-item" href="#reviewCompleted">Review Completed</a>
+                            <a class="dropdown-item" href="#rejected">Rejected Papers</a>
+                            <a class="dropdown-item" href="#published">Published Papers</a>
+                            <a class="dropdown-item" href="/logout">Log Out</a>
                         </div>
-                    </li>
-                  </ul>
-                </div>
-              </nav>            
+                    </div>
+                </li>
+              </ul>
+            </div>
+          </nav>            
 
-        </section>
+    </section>
 <hr><br>
 <!--  -->
 
-    <h1>New Submissions</h1>  
-    <div class="newSubmission" id="newsubmission">
-        <ul>
-              <% posts.forEach(function(post){
-                if(post.status === "newly_submit"){
-                %>
-                
-              
-                <a href="#" data-target="#mymodal2" data-toggle="modal">paper  </a> &nbsp &nbsp 
-                <div class="modal" id="mymodal2">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h6>Paper details</h6>
-                                <button type="btn" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <label>Author(s)</label><br>
-                                <textarea rows="2" cols="60"><%=post.author %></textarea>
-
-                                <label>Paper type</label><br>
-                                <textarea rows="1" cols="60"></textarea>
-
-                                <label>Area of interest/specialization</label>
-                                <textarea rows="2" cols="60"></textarea>
-
-                                <label>Other Keywords</label>
-                                <textarea rows="2" cols="60"><%=post.keyword %></textarea>
-
-                                <label>File </label>
-                                <a href="<%= post.image %>" target="_blank">Paper 1</a>
-            
-                            </div>
+<h1>New Submissions</h1>  
+<div class="newSubmission" id="newsubmission">
+    <ul>
+        <% posts.forEach(function(post){
+            if(post.status === "newly_submit"){
+            %>
+        <li>
+            <a href="#" data-target="#mymodal2" data-toggle="modal">paper  </a> &nbsp &nbsp 
+            <div class="modal" id="mymodal2">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6>Paper details</h6>
+                            <button type="btn" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                    </div>                    
-                </div>
-                
-                <button class="btn btn-sm btn-dark" data-target="#mymodal" data-toggle="modal">Add Reviewer</button>
-                <div class="modal" id="mymodal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h6>Reviewer details</h6>
-                                <button type="btn" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- <form action="/statuschange" method="post">
-                                    <div class="form-group">
-                                        <label>Choose Reviewer</label>
-                                        <select class="form-select form-select-sm"  aria-label="Default select example" name="reviewstatus" >
-                                            <option selected>Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
+                        <div class="modal-body">
+                            <label>Author(s)</label><br>
+                            <textarea rows="2" cols="60"><%=post.author %></textarea>
 
-                                    <div class="modal-footer">
-                                        <input class="btn btn-sm btn-dark" type="submit" data-dismiss="modal">
-                                    </div>
-                                </form> -->
+                            <label>Paper type</label><br>
+                            <textarea rows="1" cols="60"></textarea>
 
+                            <label>Area of interest/specialization</label>
+                            <textarea rows="2" cols="60"></textarea>
 
-                                <form >
-                                    <select  name="reviewstatus" >
-                                        <option selected>Open this select menu</option>
-                                        <option value="1">One</option>
+                            <label>Other Keywords</label>
+                            <textarea rows="2" cols="60"><%=post.keyword %></textarea>
 
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                    <!-- <p name="postid">post._id</p> -->
-                                    <!-- <input type="submit" value="Submit" onclick="submitform(post._id)"> -->
-                                    <button  type="submit"  onclick="submitform()" >Submit</button>
-                                  </form>
-                            </div>
-                            <!-- <div class="modal-footer">
-                                <button class="btn btn-sm btn-dark" type="submit" data-dismiss="modal">Submit</button>
-                            </div> -->
-
+                            <label>File </label>
+                            <a href="<%= post.image %>" target="_blank">Paper Link</a>
+        
                         </div>
                     </div>
+                </div>                    
+            </div>
+            
+            <button class="btn btn-sm btn-dark" data-target="#mymodal" data-toggle="modal">Add Reviewer</button>
+            <div class="modal" id="mymodal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6>Reviewer details</h6>
+                            <button type="btn" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
 
-                </div> <br>  <br>
-                
-           <% }}) %>     
-            <!-- </li> -->
-       
-          </ul>
-  </div>
-    
-  <h1>Under Review</h1> 
+                            <form action="/statuschange" method="post" >
+                                <input type="hidden" name="postId" value= "<%= post._id %>"/>
+                                <select  name="reviewstatus" >
+                                    <option selected>Open this select menu</option>
+                                    <option value="1">One</option>
+
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </select>
+                              
+                                <button type="submit">Submit</button>
+                            </form>
+                        </div>
+                       
+
+                    </div>
+                </div>
+
+            </div> <br>  <br>
+            
+       <% }}) %>     
+      
+   </li>
+      </ul>  
+            
+
+           
+      
+</div>
+
+   <h1>Under Review</h1> 
   <div class="underReview" id="underReview">
   <ul>
-    <li><a href="https://www.nitj.ac.in/index.php">Paper4</a></li>
-    <li><a href="https://www.nitj.ac.in/index.php">Paper5</a></li>
-    <li><a href="https://www.nitj.ac.in/index.php">Paper6</a></li>
+    <% posts.forEach(function(post){
+        if(post.status === "underreview"){
+        %>
+      <li>
+        <a href="<%= post.image %>" target="_blank">paper  </a>  &nbsp &nbsp 
+       
+      </li>
+      <br> <br>
+    <% }}) %> 
+    
   </ul>
   </div>
-  
-  <h1>Review Completed</h1>  
-    <div class="reviewCompleted" id="reviewCompleted">
-        <ul>
-            <li>
-                <a href="https://www.nitj.ac.in/index.php">Paper1</a> &nbsp &nbsp
-                <button class="btn btn-sm btn-dark" data-target="#mymodal" data-toggle="modal">Add Reviewer</button>
-                <div class="modal" id="mymodal">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h6 class=" bg-primary">Reviewer details</h6>
-                                <button type="btn" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-                       
-                            <div class="modal-footer">
-                                <button class="btn btn-sm btn-dark" type="submit" data-dismiss="modal">Submit</button>
-                            </div>
 
+<h1>Review Completed</h1>  
+<div class="reviewCompleted" id="reviewCompleted">
+    <ul>
+        <% posts.forEach(function(post){
+            if(post.status === "compeleted"){
+            %>
+        <li>
+            <a href="#" target="_blank">Paper</a> &nbsp &nbsp
+            <button class="btn btn-sm btn-dark" data-target="#mymodal1" data-toggle="modal">Status of paper</button>
+            <div class="modal" id="mymodal1">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6>Status of the paper</h6>
+                            <button type="btn" class="close" data-dismiss="modal">&times;</button>
                         </div>
+                        <div style="margin: 1% 5%;"> 
+                             <form action="/selection" method="post" >
+                                <input type="hidden" name="postId" value="<%= post._id %>">
+                                <div >
+                                    <input class="form-check-input" type="radio" name="status" id="radio1"  value="accepted">
+                                    <label class="form-check-label" for="#radio1">
+                                       Accept
+                                    </label> 
+                                </div>
+                                <div >
+                                    <input class="form-check-input" type="radio" name="status" id="radio2" value="rejected">
+                                    <label class="form-check-label" for="#radio2">
+                                       Reject
+                                    </label>                                        
+                                </div>
+                                <br>
+                                <div >
+                                    <label> Additional Comments</label><br>
+                                    <textarea rows="4" cols="60"></textarea>
+                                </div>
+                                <div >
+                                    <button class="btn btn-sm btn-dark" type="submit" >Submit</button>
+                                 </div>
+                            </form>
+                        </div>
+                        
+
                     </div>
+                </div>
 
-                </div> <br> <br>
-            </li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper2</a></li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper3</a></li>
-          </ul>
-  </div>
+            </div>
+        </li> <br> <br>
+        
+     
+        <% }}) %> 
+    
+    
+      </ul>
+</div>
 
-  <h1>Rejected</h1>  
-    <div class="rejected" id="rejected">
-        <ul>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper1</a></li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper2</a></li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper3</a></li>
-          </ul>
-  </div>
+<h1>Rejected</h1>  
+<div class="rejected" id="rejected">
+    <ul>
+        <% posts.forEach(function(post){
+            if(post.status === "rejected"){
+            %>
+        <li><a href="<%=post.image %>" target="_blank">Paper</a></li><br><br>
+        <% }}) %> 
+        
+      </ul>
+</div>
 
-  <h1>Published</h1>  
-    <div class="published" id="published">
-        <ul>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper1</a></li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper2</a></li>
-            <li><a href="https://www.nitj.ac.in/index.php">Paper3</a></li>
-          </ul>
-  </div>
+<h1>Published</h1>  
+<div class="published" id="published">
+    <ul>
+        <% posts.forEach(function(post){
+            if(post.status === "accepted"){
+            %>
+        <li><a href="<%=post.image %>" target="_blank">Paper1</a></li><br><br>
+        <% }}) %> 
+      </ul>
+</div>
 
 
 <!-- FOOTER -->
 <section id = "footer">
-                
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-4 col-md-4">
-                <ul>
-                    <li><strong>About</strong></li>
-                    <br>
-                    <li>ADTU Journals</li>
-                    <li>Terms and Conditions</li>
-                    <li>Manuscript</li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <ul>
-                    <li><strong>Information For</strong></li>
-                    <br>
-                    <li>Authors</li>
-                    <li>Editors</li>
-                    <li>Readers</li>
-                    <li>Peer Reviewers</li>
-                    <li>Librarions</li>
-                </ul>
-            </div>
-            <div class="col-lg-4 col-md-4">
-                <h4>Social</h4>
+            
+<div class="container">
+    <div class="row">
+        <div class="col-lg-4 col-md-4">
+            <ul>
+                <li><strong>About</strong></li>
                 <br>
-                <i class="fa-brands fa-instagram social-links"></i>
-                <i class="fa-brands fa-facebook social-links"></i>
-                <i class="fa-brands fa-twitter social-links"></i>
-                <i class="fa-brands fa-linkedin social-links"></i>
-            </div>
+                <li>ADTU Journals</li>
+                <li>Terms and Conditions</li>
+                <li>Manuscript</li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <ul>
+                <li><strong>Information For</strong></li>
+                <br>
+                <li>Authors</li>
+                <li>Editors</li>
+                <li>Readers</li>
+                <li>Peer Reviewers</li>
+                <li>Librarions</li>
+            </ul>
+        </div>
+        <div class="col-lg-4 col-md-4">
+            <h4>Social</h4>
+            <br>
+            <i class="fa-brands fa-instagram social-links"></i>
+            <i class="fa-brands fa-facebook social-links"></i>
+            <i class="fa-brands fa-twitter social-links"></i>
+            <i class="fa-brands fa-linkedin social-links"></i>
         </div>
     </div>
+</div>
 
 
 <div class="copyright">
-    © 2023 Copyright:
-    <a class="text-dark" href="#">ADTUjournals.com</a>
+© 2023 Copyright:
+<a class="text-dark" href="#">ADTUjournals.com</a>
 </div>
 
 </section>
 
-<script>
-  function submitform(){
-       const formData = new FormData(this);
-        const searchParams = new URLSearchParams();
-        console.log('event listened');
-        for(const pair of formData){
-            searchParams.append(pair[0], pair[1]);
-        }
-        // searchParams.append(id ,postid);
-             
-        
-         
-
-        fetch('statuschange',{
-            method :'post',
-            body : formData
-        }).then(function(response){
-            return response.text();
-        }).then(function(text){
-            console.log(text);
-        }).catch(function(error){
-            console.log(error);
-        })
-        }
+</body>
   
-
-</script>
-
-  </body>
 </html>
