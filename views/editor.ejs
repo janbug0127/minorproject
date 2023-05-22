@@ -278,6 +278,33 @@
 
 </section>
 
-</body>
+<script>
+  function submitform(postid){
+       const formData = new FormData(this);
+        const searchParams = new URLSearchParams();
+        console.log('event listened');
+        for(const pair of formData){
+            searchParams.append(pair[0], pair[1]);
+        }
+         searchParams.append(id ,postid);
+             
+        
+         
+
+        fetch('statuschange',{
+            method :'post',
+            body : formData
+        }).then(function(response){
+            return response.text();
+        }).then(function(text){
+            console.log(text);
+        }).catch(function(error){
+            console.log(error);
+        })
+        }
   
+
+</script>
+
+  </body>
 </html>
