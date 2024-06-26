@@ -14,8 +14,9 @@ const cloudinary = require("cloudinary").v2;
 const Formidable = require("formidable");
 const multer = require("multer");
 const fs = require("fs");
+
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
+  cloud_name  : process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
   api_secret: process.env.API_SECRET,
 });
@@ -26,7 +27,7 @@ const path = require("path");
 var cors = require("cors");
 const console = require("console");
 mongoose.set("strictQuery", false);
-mongoose.connect("mongodb://localhost:27017/blogdb");
+mongoose.connect("mongodb+srv://Anj2701:Anj%402701@sample.yo4pwee.mongodb.net/");  
 
 var username = "tanisha";
 const app = express();
@@ -162,7 +163,7 @@ app.post("/login", async function (req, res) {
 
   const token = await data.generateAuthToken();
   res.cookie("jwt", token, {
-    expires: new Date(Date.now() + 600000),
+    expires: new Date(Date.now() + 60000000),
     httpOnly: true,
   });
 
@@ -235,12 +236,11 @@ app.get("/submit", auth, function (req, res) {
     username: req.user.name,
   });
 });
+
 app.get("/editor", auth, function (req, res) {
-  Post.find({}, function (err, posts) {
-    // User.find({}, function(error, users){
+  Post.find({}, function (err, posts) { 
 
     res.render("editor", {
-      //  authorid : req.user._id,
       posts: posts,
       username: req.user.name,
       User: User,
@@ -249,20 +249,17 @@ app.get("/editor", auth, function (req, res) {
     });
   });
 });
+
 app.get("/reviewer", auth, function (req, res) {
   Post.find({}, function (err, posts) {
-    // User.find({}, function(error, users){
      
     res.render("reviewer", {
-      //  authorid : req.user._id,
       posts: posts,
       username: req.user.name,
-
-
-      //  });
     });
   })
 });
+
 app.get("/author", auth, function (req, res) {
   username = req.user.name;
   Post.find({}, function (err, posts) {
@@ -286,6 +283,7 @@ app.get("/compose", function (req, res) {
 });
 
 app.get("/register", function (req, res) {
+  console.log('hii');
   res.render("register");
 });
 
