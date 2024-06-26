@@ -33,7 +33,7 @@ var username = "tanisha";
 const app = express();
 app.use(cors(
   {
-    origin: ["https://minorproject-1-iota.vercel.app/"],
+    origin: ["https://minorproject-1-anjalis-projects-cdcf622d.vercel.app/"],
     methods: ["POST","GET"],
     credentials: true
   }
