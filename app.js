@@ -31,7 +31,13 @@ mongoose.connect("mongodb+srv://Anj2701:Anj%402701@sample.yo4pwee.mongodb.net/")
 
 var username = "tanisha";
 const app = express();
-app.use(cors());
+app.use(cors(
+  {
+    origin: ["https://minorproject-1-iota.vercel.app/"],
+    methods: ["POST","GET"],
+    credentials: true
+  }
+));
 
 app.set("view engine", "ejs");
 
